@@ -779,6 +779,23 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
             width: 28px;
             height: 28px;
         }
+        .ai-close:hover { color: #ef4444; }
+        
+        .ai-reset {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 0;
+            width: 28px;
+            height: 28px;
+            transition: all 0.3s;
+        }
+        .ai-reset:hover {
+            color: #3b82f6;
+            transform: rotate(180deg);
+        }
         
         .ai-body { padding: 16px 20px; }
         .ai-messages {
@@ -1295,7 +1312,10 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
     <div class="ai-panel" id="aiPanel">
         <div class="ai-header">
             <h3>AI Assistant</h3>
-            <button class="ai-close" onclick="toggleAI()">×</button>
+            <div style="display: flex; gap: 8px;">
+                <button class="ai-reset" onclick="resetChat()" title="Reset conversation">🔄</button>
+                <button class="ai-close" onclick="toggleAI()">×</button>
+            </div>
         </div>
         <div class="ai-body">
             <div class="ai-messages" id="aiMessages">
@@ -1769,6 +1789,16 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
                 // Move cursor to end
                 input.setSelectionRange(input.value.length, input.value.length);
             }
+        }
+        
+        function resetChat() {
+            const messagesDiv = document.getElementById('aiMessages');
+            messagesDiv.innerHTML = `
+                <div class="ai-message assistant">
+                    Hi! I can help you analyze inventory, forecast demand, and suggest reorder strategies. What would you like to know?
+                </div>
+            `;
+            document.getElementById('aiInput').value = '';
         }
         
         function toggleAI() {
